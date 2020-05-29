@@ -6,13 +6,26 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/etId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入数据...."
+        android:textColor="#f00"
+        android:textSize="20dp" />
+
     <!--请求数据按钮-->
     <Button
-        android:id="@+id/send_request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="request_func"
         android:text="Send Request" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="comment_func"
+        android:text="调评论接口" />
 
     <!--呈现内容-->
     <ScrollView

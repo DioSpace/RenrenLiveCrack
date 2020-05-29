@@ -1,53 +1,42 @@
 package com.my.okhttpdemo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 public class MainActivity extends AppCompatActivity {
 
-    TextView textView;
+    private static final String TAG = "T1";
+    TextView show_board;
+    EditText input_bard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView) findViewById(R.id.request_text);
+        show_board = (TextView) findViewById(R.id.request_text);
+        input_bard = (EditText) findViewById(R.id.etId);
     }
 
     public void request_func(View view) {
-        sendRequestWithOkHttp();
+        String plaintext = "test123456";
+        if (input_bard.getText().toString().length() != 0) {
+            plaintext = input_bard.getText().toString();
+        }
+        Log.w(TAG, "plaintext:"+ plaintext);
+        String ciphertext = RSAUtil.encrypt(plaintext);
+        if (ciphertext != null) {
+            show_board.setText(ciphertext);
+        }
     }
 
-    private void sendRequestWithOkHttp() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    OkHttpClient client = new OkHttpClient();//新建一个OKHttp的对象
-                    Request request = new Request.Builder().url("https://www.baidu.com").build();//创建一个Request对象
-                    Response response = client.newCall(request).execute();//发送请求获取返回数据
-                    String responseData = response.body().string();//处理返回的数据
-                    showResponse(responseData);//更新ui
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void showResponse(final String response) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                textView.setText(response);
-            }
-        });
+    public void comment_func(View view) {
+        CommentUtil commentUtil = new CommentUtil();
+        String content = input_bard.getText().toString();
+        commentUtil.comment(content);
     }
 }
