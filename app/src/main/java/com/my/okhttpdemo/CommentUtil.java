@@ -27,23 +27,8 @@ public class CommentUtil {
     String secretKey = "d787468a5646e5e0d7657893ffcb9c79";//15
 
     public void comment(String content) {
-//        Map<String, Object> paraMap = new HashMap<String, Object>();
-//        paraMap.put("v", v);                          //1
         long currentTime = System.currentTimeMillis();
         call_id = currentTime + "";
-//        Log.e(TAG, "call_id:" + call_id);
-//        paraMap.put("call_id", call_id);//变化          //2
-//        paraMap.put("gz", gz);                      //3
-//        paraMap.put("log_info", log_info);          //4
-//        paraMap.put("uniq_key", uniq_key);          //5
-//        paraMap.put("entry_id", entry_id);          //6
-//        paraMap.put("extension", extension);        //7
-//        paraMap.put("api_key", api_key);            //8
-//        paraMap.put("content", content);            //9
-//        paraMap.put("owner_id", owner_id);          //10
-//        paraMap.put("session_key", session_key);    //11
-//        paraMap.put("type", type);                  //12
-//        paraMap.put("format", format);              //13
         sig = SigUtil.getSig2(
                 v, call_id, gz,
                 log_info, uniq_key, entry_id,
@@ -51,12 +36,6 @@ public class CommentUtil {
                 owner_id, session_key, type,
                 format, secretKey);
         Log.e(TAG, "sig:" + sig);
-
-//        paraMap.put("sig", sig);                    //14
-//        JSONObject param_json = new JSONObject(paraMap);
-//        String parmas = param_json.toString();
-//        Log.e(TAG, "parmas : " + parmas);
-
 
         //表单数据参数填入
         RequestBody body = new FormBody.Builder()
