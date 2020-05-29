@@ -1,15 +1,23 @@
 package com.my.okhttpdemo;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,6 +38,7 @@ public class MyOkHttp {
                 .build();
     }
 
+    //单例
     private static class HttpOkHttpInstance {
         private final static MyOkHttp INSTANCE = new MyOkHttp();
     }
@@ -73,13 +82,31 @@ public class MyOkHttp {
      * POST请求
      *
      * @param url            请求地址
-     * @param json           请求参数 json 格式
+     * @param params         请求参数 Map<String,String> 格式
      * @param okHttpCallBack 请求回调
      * @param clazz          返回结果的class
      * @param <T>            请求返回的类型
      */
-    public <T> void requestPost(@NotNull String url, @NotNull String json, @NotNull final OkHttpCallBack<T> okHttpCallBack,
+    public <T> void requestPost(@NotNull String url, @NotNull LinkedHashMap<String, String> params, @NotNull final OkHttpCallBack<T> okHttpCallBack,
                                 @NotNull final Class<T> clazz) {
+        //获取到参数 params 类型为LinkedHashMap<String,String>,转化为发网络请求所需的JSON字符串格式
+//        JSONObject param_json = new JSONObject(params);
+//        String json = param_json.toString();
+        JSONObject param_json = new JSONObject();
+        try {
+            for (LinkedHashMap.Entry<String, String> entity : params.entrySet()) {
+                if (entity.getKey().equals("sig2")) {
+                    param_json.put("sig", entity.getValue());
+                    break;
+                }
+                param_json.put(entity.getKey(), entity.getValue());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String json = param_json.toString();
+        Log.e("t2", "json:\n" + json);
+
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
@@ -103,7 +130,28 @@ public class MyOkHttp {
         });
     }
 
-    public <T> void submitFormdata(@NotNull String url, @NotNull RequestBody body, @NotNull final OkHttpCallBack<T> okHttpCallBack, @NotNull final Class<T> clazz) {
+
+    /**
+     * POST提交Form-data表单
+     *
+     * @param url            请求地址
+     * @param params         请求参数 Map<String,String> 类型
+     * @param okHttpCallBack 请求回调
+     * @param clazz          返回结果的Class
+     * @param <T>            返回结果类型
+     */
+    public <T> void submitFormdata(@NotNull String url, @NotNull LinkedHashMap<String, String> params, @NotNull final OkHttpCallBack<T> okHttpCallBack, @NotNull final Class<T> clazz) {
+
+        FormBody.Builder builder = new FormBody.Builder();
+        for (LinkedHashMap.Entry<String, String> entity : params.entrySet()) {
+            if (entity.getKey().equals("sig2")) {
+                builder.add("sig", entity.getValue());
+                break;
+            }
+            builder.add(entity.getKey(), entity.getValue());
+        }
+        RequestBody body = builder.build();
+
         final Request request = new Request.Builder()
                 .url(url)
                 .post(body)

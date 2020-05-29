@@ -1,2 +1,2 @@
-rootProject.name='OKHttpDemo'
+rootProject.name='Renren'
 include ':app'

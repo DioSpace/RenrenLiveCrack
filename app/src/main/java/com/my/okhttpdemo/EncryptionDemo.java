@@ -1,5 +1,7 @@
 package com.my.okhttpdemo;
 
+import android.widget.Toast;
+
 import org.json.JSONObject;
 
 import java.math.BigInteger;
@@ -19,7 +21,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class RSAUtil {
+public class EncryptionDemo {
 
     private static final String TAG = "T1";
     private static PublicKey publicKey = null;
@@ -47,11 +49,6 @@ public class RSAUtil {
 
     public static String encrypt(String plaintext) {
         getKeyParam();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if (publicKey == null) {
             return null;
         }

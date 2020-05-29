@@ -18,8 +18,21 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="request_func"
-        android:text="Send Request" />
+        android:onClick="password_rsa_func"
+        android:text="对密码进行RSA加密" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="login_func"
+        android:text="调用登录接口" />
+
+    <EditText
+        android:id="@+id/commentTVId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入评论内容..."
+        android:textColorHighlight="#f00" />
 
     <Button
         android:layout_width="match_parent"
