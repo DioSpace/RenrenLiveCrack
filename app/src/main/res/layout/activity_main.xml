@@ -14,12 +14,11 @@
         android:textColor="#f00"
         android:textSize="20dp" />
 
-    <!--请求数据按钮-->
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="password_rsa_func"
-        android:text="对密码进行RSA加密" />
+        android:onClick="encrpt_func"
+        android:text="对密码加密" />
 
     <Button
         android:layout_width="match_parent"

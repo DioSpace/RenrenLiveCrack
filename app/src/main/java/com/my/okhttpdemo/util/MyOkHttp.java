@@ -1,4 +1,4 @@
-package com.my.okhttpdemo;
+package com.my.okhttpdemo.util;
 
 import android.util.Log;
 
@@ -10,9 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;

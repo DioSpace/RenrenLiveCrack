@@ -1,4 +1,4 @@
-package com.my.okhttpdemo;
+package com.my.okhttpdemo.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

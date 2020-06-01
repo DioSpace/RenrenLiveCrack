@@ -1,10 +1,12 @@
-package com.my.okhttpdemo;
+package com.my.okhttpdemo.util;
 
 import android.util.Log;
 
+import com.my.okhttpdemo.util.MD5;
+
 import java.util.LinkedHashMap;
 
-public class SignatureDemo {
+public class SignatureUtil {
 
     private static String TAG = "t2";
 
